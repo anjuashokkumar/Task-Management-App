@@ -86,7 +86,11 @@
                                         {{ $todo->status }}</span></h6>
                                     </td>
                                     <td class="align-middle">
-                                        <p class="small mb-0 text-warning"><i class="text-warning fas fa-hourglass-half me-2 text-warning"></i>{{ $todo->due_date ? $todo->due_date->format('d M Y') : '-' }}</p>
+                                        @if($todo->due_date)
+                                            <p class="small mb-0 text-warning"><i class="text-warning fas fa-hourglass-half me-2 text-warning"></i>{{ $todo->due_date ? $todo->due_date->format('d M Y') : '-' }}</p>
+                                        @else
+                                            <span>-</span>
+                                        @endif
                                     </td>
                                     <td class="align-middle">
                                         <p class="small mb-0 text-muted"><i class="text-muted fas fa-info-circle me-2"></i>{{ $todo->created_at->format('d M Y') }}</p>
@@ -243,8 +247,12 @@ $(document).ready(function(){
                         <td class="align-middle"><span>${todo.title}</span></td>
                         <td class="align-middle text-muted">${todo.description ?? ''}</td>
                         <td class="align-middle"><h6 class="mb-0"><span class="badge ${todo.status == 'Pending' ? 'bg-warning' : (todo.status == 'In Progress' ? 'bg-primary' : 'bg-success')}">${todo.status}</span></h6></td>
-                        <td class="align-middle">
-                            <p class="small mb-0 text-warning"><i class="text-warning fas fa-hourglass-half me-2 text-warning"></i>${todo.due_date ?? '-'}</p></td>
+                        <td class="align-middle">${todo.due_date
+                            ? `<p class="small mb-0 text-warning">
+                                    <i class="fas fa-hourglass-half me-2"></i>${todo.due_date}
+                            </p>`
+                            : `<span>-</span>`}
+                        </td>
                         <td class="align-middle">
                             <p class="small mb-0 text-muted"><i class="text-muted fas fa-info-circle me-2"></i>${todo.created_at}</p></td>
                         <td class="align-middle">
@@ -346,11 +354,12 @@ $(document).ready(function(){
                     ? res.todo.due_date_formatted   
                     : '-';
 
-                row.find('td:eq(3)').html(`
-                    <p class="small mb-0 text-warning">
-                        <i class="fas fa-hourglass-half me-2"></i>${dueDateText}
-                    </p>
-                `);
+                row.find('td:eq(3)').html(res.todo.due_date
+                    ? `<p class="small mb-0 text-warning">
+                        <i class="fas fa-hourglass-half me-2"></i>${res.todo.due_date_formatted || res.todo.due_date}
+                    </p>`
+                    : `<span>-</span>`
+                );
 
                 $('#editModal').modal('hide');
             }

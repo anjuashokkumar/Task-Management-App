@@ -26,7 +26,7 @@ class TodoController extends Controller
                 'title' => $todo->title,
                 'description' => $todo->description,
                 'status' => $todo->status,
-                'due_date' => $todo->due_date ? $todo->due_date->format('d M Y') : '-',
+                'due_date' => $todo->due_date ? $todo->due_date->format('d M Y') : '',
                 'created_at' => $todo->created_at->format('d M Y'),
             ]
         ]);

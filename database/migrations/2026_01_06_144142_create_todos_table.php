@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('status')->default('Pending');
-            $table->date('due_date')->index();
+            $table->date('due_date')->nullable()->index();
             $table->timestamps();
         });
     }
