@@ -33,4 +33,36 @@
 	</div>
 </div>
 
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+    <div id="successToast" class="toast fade align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('scripts')
+<script>
+    function showToast(message) {
+        const toastEl = document.getElementById('successToast');
+        if (!toastEl) return;
+
+        document.getElementById('toastMessage').innerText = message;
+
+        const toast = new bootstrap.Toast(toastEl, {
+            delay: 3000
+        });
+
+        toast.show();
+    }
+</script>
+@if(session('success'))
+<script>
+    showToast("{{ session('success') }}");
+</script>
+@endif
 @endsection

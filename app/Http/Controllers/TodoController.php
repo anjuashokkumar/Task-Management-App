@@ -39,6 +39,7 @@ class TodoController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Task marked as completed!',
             'todo' => [
                 'id' => $todo->id,
                 'status' => $todo->status,
@@ -65,6 +66,7 @@ class TodoController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Task updated successfully!',
             'todo' => [
                 'id' => $todo->id,
                 'title' => $todo->title,
@@ -81,7 +83,8 @@ class TodoController extends Controller
         $todo->delete();
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'message' => 'Task deleted successfully!',
         ]);
     }
 }

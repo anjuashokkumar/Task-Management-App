@@ -117,10 +117,10 @@ a{color:inherit;text-decoration:none} */
 	border-radius:25px;
 	background:rgba(255,255,255,.1);
 }
-.login-form .group input[data-type="password"]{
+/* .login-form .group input[data-type="password"]{
 	text-security:circle;
 	-webkit-text-security:circle;
-}
+} */
 .login-form .group .label{
 	color:#aaa;
 	font-size:12px;
@@ -247,3 +247,24 @@ a{color:inherit;text-decoration:none} */
 #searchTitle {
     border-left: 0;
 }
+
+.login-form .group .input {
+    padding-right: 45px; 
+}
+
+.toggle-password {
+    position: absolute;
+    top: 58%;
+    right: 18px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #edf3ff;
+    z-index: 20;
+    font-size: 16px;
+}
+
+.toggle-password:hover {
+    color: #fff;
+}
+
+

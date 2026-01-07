@@ -22,12 +22,12 @@
 ### UI / UX
 - Messages for success/error operations.
 
-### Bonus / Optional Enhancements
+### Optional Enhancements
 - AJAX-based create/update/delete without page reload.
 - Filtering by title and due date range.
 - Status badges with colors:
-  - Pending → 🟡 Yellow  
-  - In Progress → 🔵 Blue  
-  - Completed → 🟢 Green
+  - Pending → Yellow  
+  - In Progress → Blue  
+  - Completed → Green
 
 

@@ -26,12 +26,6 @@
 
                 <div class="card-body">
 
-                    @if (session('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
                     <div class="mb-3">
 
                         <div class="d-flex gap-2 mb-2">
@@ -107,7 +101,7 @@
                                 </tr>
                             @empty
                                 <tr id="noTodos">
-                                    <td colspan="6" class="text-center text-muted">No tasks yet</td>
+                                    <td colspan="6" class="text-center text-muted">No tasks!</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -158,7 +152,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
@@ -212,11 +206,36 @@
     </div>
 </div>
 
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+    <div id="successToast" class="toast fade align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
 <script>
 $(document).ready(function(){
+
+    function showToast(message) {
+        $('#toastMessage').text(message);
+
+        let toastEl = document.getElementById('successToast');
+        let toast = bootstrap.Toast.getOrCreateInstance(toastEl, {
+            delay: 3000
+        });
+
+        toast.show();
+    }
+
+    @if(session('success'))
+        showToast("{{ session('success') }}");
+    @endif
 
     let today = new Date().toISOString().split('T')[0];
     $('#due_date').attr('min', today);
@@ -267,6 +286,7 @@ $(document).ready(function(){
 
                 $('#todoForm')[0].reset();
                 $('#addModal').modal('hide');
+                showToast(res.message);
             },
             error: function(xhr){
                 if(xhr.status === 422){
@@ -302,6 +322,8 @@ $(document).ready(function(){
 
                     row.find('.fa-check').remove();
                     row.find('.fa-pencil-alt').remove();
+
+                    showToast(res.message);
                 }
             }
         });
@@ -362,6 +384,7 @@ $(document).ready(function(){
                 );
 
                 $('#editModal').modal('hide');
+                showToast(res.message);
             }
         });
     });
@@ -372,8 +395,9 @@ $(document).ready(function(){
         $.ajax({
             url: `/todos/${id}`,
             type: 'DELETE',
-            success: function(){
+            success: function(res){
                 $('#todo-' + id).remove();
+                showToast(res.message);
             }
         });
     });
